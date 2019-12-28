@@ -1,3 +1,15 @@
+/**
+ * 
+ * wownime rest api
+ * scrap from ayranime apps
+ * 
+ * 
+ * author : alfian oktafireza (alfianokt)
+ * 
+ * thanks for ayrahikari for
+ * the amazing apps :)
+ */
+
 const cors = require('cors')
 const express = require('express')
 const app = express()
@@ -40,9 +52,37 @@ app.get('/post/:id', (req, res) => {
     })
 })
 
-app.get('/all', (req, res) => {
+app.get('/batch', (req, res) => {
   axios.get('http://34.66.149.194/ayranime/all', {
     params: {page: req.query.page || 1, category: 2}
+  })
+    .then(_res => {
+      _res.data.ok = true
+      _res.data.msg = ''
+      res.json(_res.data)
+    })
+    .catch(e => {
+      res.status(400).json({ok: false, msg: 'An error occurred.'})
+    })
+})
+
+app.get('/streaming', (req, res) => {
+  axios.get('http://34.66.149.194/ayranime/all', {
+    params: {page: req.query.page || 1, category: 4}
+  })
+    .then(_res => {
+      _res.data.ok = true
+      _res.data.msg = ''
+      res.json(_res.data)
+    })
+    .catch(e => {
+      res.status(400).json({ok: false, msg: 'An error occurred.'})
+    })
+})
+
+app.get('/search', (req, res) => {
+  axios.get('http://34.66.149.194/ayranime/search', {
+    params: {page: req.query.page || 1, q: req.query.q || ''}
   })
     .then(_res => {
       _res.data.ok = true
